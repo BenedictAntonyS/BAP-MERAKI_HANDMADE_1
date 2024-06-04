@@ -21,7 +21,7 @@ def secure_filename(filename):
     return filename
 
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('app/database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -31,6 +31,7 @@ def init_db():
         DROP TABLE IF EXISTS users;
         DROP TABLE IF EXISTS products;
         DROP TABLE IF EXISTS cart;
+        DROP TABLE IF EXISTS contact;
 
         CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -62,24 +63,24 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users (id),
             FOREIGN KEY (product_id) REFERENCES products (id)
         );
+
         CREATE TABLE contact (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            email REAL NOT NULL,
+            email TEXT NOT NULL,
             mobile_no INTEGER NOT NULL,
             message TEXT NOT NULL,
-            Type_of_inquiry TEXT not NULL
+            Type_of_inquiry TEXT NOT NULL
         );
 
         INSERT INTO users (username, password, is_admin) VALUES
             ('admin', 'admin', 1),
             ('user', 'user', 0);
-                       
     ''')
     conn.commit()
     conn.close()
 
-if not os.path.exists('database.db'):
+if not os.path.exists('app/database.db'):
     init_db()
 
 @app.before_request
