@@ -33,14 +33,14 @@ def init_db():
         DROP TABLE IF EXISTS cart;
         DROP TABLE IF EXISTS contact;
 
-        CREATE TABLE users (
+        CREATE TABLE if not exist users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
             password TEXT NOT NULL,
             is_admin BOOLEAN NOT NULL CHECK (is_admin IN (0, 1))
         );
 
-        CREATE TABLE products (
+        CREATE TABLE if not exist products (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             price REAL NOT NULL,
@@ -50,7 +50,7 @@ def init_db():
             details TEXT 
         );
 
-        CREATE TABLE cart (
+        CREATE TABLE if not exist cart (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             product_id INTEGER NOT NULL,
@@ -64,7 +64,7 @@ def init_db():
             FOREIGN KEY (product_id) REFERENCES products (id)
         );
 
-        CREATE TABLE contact (
+        CREATE TABLE if not exist contact (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
@@ -82,7 +82,7 @@ def init_db():
 
 if not os.path.exists('app/database.db'):
     init_db()
-
+    
 @app.before_request
 def before_request():
     allowed_routes = ['login', 'logout', 'static']
