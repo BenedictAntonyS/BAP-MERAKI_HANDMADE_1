@@ -33,14 +33,14 @@ def init_db():
         DROP TABLE IF EXISTS cart;
         DROP TABLE IF EXISTS contact;
 
-        CREATE TABLE if not exist users (
+        CREATE TABLE if not exists users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
             password TEXT NOT NULL,
             is_admin BOOLEAN NOT NULL CHECK (is_admin IN (0, 1))
         );
 
-        CREATE TABLE if not exist products (
+        CREATE TABLE if not exists products (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             price REAL NOT NULL,
@@ -50,7 +50,7 @@ def init_db():
             details TEXT 
         );
 
-        CREATE TABLE if not exist cart (
+        CREATE TABLE if not exists cart (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             product_id INTEGER NOT NULL,
@@ -64,7 +64,7 @@ def init_db():
             FOREIGN KEY (product_id) REFERENCES products (id)
         );
 
-        CREATE TABLE if not exist contact (
+        CREATE TABLE if not exists contact (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
