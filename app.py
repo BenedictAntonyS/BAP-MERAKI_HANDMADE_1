@@ -21,7 +21,7 @@ def secure_filename(filename):
     return filename
 
 def get_db_connection():
-    conn = sqlite3.connect('app/database.db')
+    conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -80,7 +80,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-if not os.path.exists('app/database.db'):
+if not os.path.exists('database.db'):
     init_db()
     
 @app.before_request
